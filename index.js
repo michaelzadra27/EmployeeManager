@@ -72,7 +72,7 @@ const menu = () => {
 
 const viewEmployees = () => {
 
-    const query = 'SELECT * FROM employee';
+    const query = 'SELECT * FROM employee LEFT JOIN department ON employee.id = department.id JOIN roles ON department.id = roles.id';
     connection.query(query, (err, res) => {
         if (err) throw err;
         // Log all results of the SELECT statement
@@ -93,8 +93,8 @@ const viewDepartments = () => {
         console.table(res);
         console.log("Here are the Departments")
         menu();
-        
-        
+
+
 
     });
 
@@ -116,56 +116,154 @@ const viewRoles = () => {
 
 const addEmployee = () => {
     inquirer
-  .prompt([
-    
-    {
-      type: 'input',
-      name: 'first',
-      message: 'What is the first name?',
-    },
-    {
-      type: 'input',
-      name: 'last',
-      message: 'What is the last name?',
-    },
-    {
-      type: 'input',
-      name: 'roleID',
-      message: 'What is the role ID?',
-    },
+        .prompt([
 
-    {
-      type: 'input',
-      name: 'managerID',
-      message: 'What is the manager ID?',
-    }
-])
-.then((data) => {
-    console.log('Updating all Rocky Road quantities...\n');
-  const query = connection.query(
-    'INSERT INTO employee SET ?',
-    
-      {
-        first_name: data.first,
-        last_name: data.last,
-        role_id: data.roleID,
-        manager_id: data.managerID
-      },
-    
-    
-    (err, res) => {
-      if (err) throw err;
-      console.log(`${res.affectedRows} products updated!\n`);
+            {
+                type: 'input',
+                name: 'first',
+                message: 'What is the first name?',
+            },
+            {
+                type: 'input',
+                name: 'last',
+                message: 'What is the last name?',
+            },
+            {
+                type: 'input',
+                name: 'roleID',
+                message: 'What is the role ID?',
+            },
+
+            {
+                type: 'input',
+                name: 'managerID',
+                message: 'What is the manager ID?',
+            }
+        ])
+        .then((data) => {
+            console.log('Updating all Rocky Road quantities...\n');
+            const query = connection.query(
+                'INSERT INTO employee SET ?',
+
+                {
+                    first_name: data.first,
+                    last_name: data.last,
+                    role_id: data.roleID,
+                    manager_id: data.managerID
+                },
 
 
-    console.log("Added Employee")
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(`${res.affectedRows} products updated!\n`);
 
-    menu();
 
-});
+                    console.log("Added Employee")
 
-});
+                    menu();
+
+                });
+        });
 }
+
+const addRole = () => {
+    inquirer
+        .prompt([
+
+            {
+                type: 'input',
+                name: 'first',
+                message: 'What is the first name?',
+            },
+            {
+                type: 'input',
+                name: 'last',
+                message: 'What is the last name?',
+            },
+            {
+                type: 'input',
+                name: 'roleID',
+                message: 'What is the role ID?',
+            },
+
+            {
+                type: 'input',
+                name: 'managerID',
+                message: 'What is the manager ID?',
+            }
+        ])
+        .then((data) => {
+            
+            const query = connection.query(
+                'INSERT INTO employee SET ?',
+
+                {
+                    first_name: data.first,
+                    last_name: data.last,
+                    role_id: data.roleID,
+                    manager_id: data.managerID
+                },
+
+
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(`${res.affectedRows} products updated!\n`);
+
+
+                    console.log("Added Employee")
+
+                    menu();
+
+                });
+        });
+}
+
+const addDepartment = () => {
+    inquirer
+        .prompt([
+
+            {
+                type: 'input',
+                name: 'jobTitle',
+                message: 'What is the job title',
+            },
+            {
+                type: 'input',
+                name: 'pay',
+                message: 'What is the salary',
+            },
+            {
+                type: 'input',
+                name: 'departmentID',
+                message: 'What is the department ID?',
+            }
+        ])
+        .then((data) => {
+           
+            const query = connection.query(
+                'INSERT INTO roles SET ?',
+
+                {
+                    title: data.jobTitle,
+                    salary: data.pay,
+                    department_id: data.departmentID,
+                    
+                },
+
+
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(`${res.affectedRows} products updated!\n`);
+
+
+                    console.log("Added Department!")
+
+                    menu();
+
+                });
+        });
+}
+
 function quitter() {
     console.log("Thank you")
     //connection.end();
