@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS eDB;
-CREATE database employeeDB;;
+DROP DATABASE IF EXISTS employeeDB;
+CREATE database employeeDB;
 
-USE employeeDB;;
+USE employeeDB;
 
 CREATE TABLE employee (
     id INT AUTO_INCREMENT,
@@ -15,12 +15,13 @@ CREATE TABLE employee (
 CREATE Table role (
     id INT AUTO_INCREMENT,
     title VARCHAR(30),
-    salaray INT,
+    salary INT,
     department_id INT,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE department (
     id INT AUTO_INCREMENT,
-    name VARCHAR(30)
+    name VARCHAR(30),
+    PRIMARY KEY(id)
 )
